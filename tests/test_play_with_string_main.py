@@ -43,6 +43,11 @@ def test_main_number_float():
     assert play_with_string.main(8.28427) is True
 
 
+def test_main_none():
+    """Test for main(None)."""
+    assert play_with_string.main(None) is True
+
+
 def test_main_blank():
     """Test for main("")."""
     assert play_with_string.main("") is True  # , "Passed: empty string. Minimum 1 argument required."
@@ -66,6 +71,11 @@ def test_main_list_of_values_of_multiple_types():
 def test_main_list_of_str_values():
     """Test for main(list)."""
     assert play_with_string.main(["-u", "O-o", "H!"]) is True
+
+
+def test_main_list_of_int_values():
+    """Test for main(list)."""
+    assert play_with_string.main([1, 7, 4]) is True
 
 
 if __name__ == "__main__":

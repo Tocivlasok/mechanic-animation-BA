@@ -34,6 +34,11 @@ def test_upper_case_str_number_float():
     assert play_with_string.upper_case_str(8.28427) is False
 
 
+def test_upper_case_str_none():
+    """Test for upper_case_str(None)."""
+    assert play_with_string.upper_case_str(None) is False
+
+
 def test_upper_case_str_blank():
     """Test for upper_case_str("")."""
     assert play_with_string.upper_case_str("") is False  # , "Passed: empty string. Minimum 1 argument required."
@@ -52,6 +57,11 @@ def test_upper_case_str_char10():
 def test_upper_case_str_list_of_values():
     """Test for upper_case_str(list)."""
     assert play_with_string.upper_case_str(["mio", 125, {"!", "↔"}]) is False
+
+
+def test_upper_case_str_list_of_int_values():
+    """Test for upper_case_str(list)."""
+    assert play_with_string.upper_case_str([1, 7, 4]) is False
 
 
 if __name__ == "__main__":
