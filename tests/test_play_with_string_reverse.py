@@ -48,6 +48,11 @@ def test_reverse_str_number_float():
     assert play_with_string.reverse_str(8.28427) is False
 
 
+def test_reverse_str_none():
+    """Test for reverse_str(None)."""
+    assert play_with_string.reverse_str(None) is False
+
+
 def test_reverse_str_blank():
     """Test for reverse_str("")."""
     assert play_with_string.reverse_str("") is False  # , "Passed: empty string. Minimum 1 argument required."
@@ -66,6 +71,11 @@ def test_reverse_str_char10():
 def test_reverse_str_list_of_values():
     """Test for reverse_str(list)."""
     assert play_with_string.reverse_str(["mio", 125, {"!", "↔"}]) is False
+
+
+def test_reverse_str_list_of_int_values():
+    """Test for reverse_str(list)."""
+    assert play_with_string.reverse_str([1, 7, 4]) is False
 
 
 if __name__ == "__main__":
