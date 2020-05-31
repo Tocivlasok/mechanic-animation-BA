@@ -1,9 +1,9 @@
 README.md
 setup.py
-mechanitocivlasok.egg-info/PKG-INFO
-mechanitocivlasok.egg-info/SOURCES.txt
-mechanitocivlasok.egg-info/dependency_links.txt
-mechanitocivlasok.egg-info/top_level.txt
+mechanictocivlasok.egg-info/PKG-INFO
+mechanictocivlasok.egg-info/SOURCES.txt
+mechanictocivlasok.egg-info/dependency_links.txt
+mechanictocivlasok.egg-info/top_level.txt
 string_funcs/__init__.py
 string_funcs/play_with_string.py
 tests/__init__.py

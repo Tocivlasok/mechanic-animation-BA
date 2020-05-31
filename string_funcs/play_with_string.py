@@ -26,12 +26,12 @@ def reverse_str(str_passed):
     # check whether user input is not blank
     # print("from reverse_str()")
     if not bool(str_passed):
-        # print("You have entered an empty string.")
+        print("You have entered an empty string.")
         return False
     # check whether user input is of type str
     # not needed as argparse in main() takes all the inputs as strings
     elif not isinstance(str_passed, str):
-        # print("You should have entered a string.")
+        print("You should have entered a string.")
         return False
     # return reverserd string
     else:
@@ -44,12 +44,12 @@ def upper_case_str(str_passed):
     # check whether user input is not blank
     # print("from upper_case_str()")
     if not bool(str_passed):
-        # print("You have entered an empty string.")
+        print("You have entered an empty string.")
         return False
     # check whether user input is of type str
     # not needed as argparse in main() takes all the inputs as strings
     elif not isinstance(str_passed, str):
-        # print("You should have entered a string.")
+        print("You should have entered a string.")
         return False
     # return upperCased string
     else:
@@ -74,7 +74,6 @@ def main(*args):
 
     Converts it in 3 different ways.
     """
-    print("\nFrom the console:")
     parser = argparse.ArgumentParser()
     if(len(args) == 0):
         parser.add_argument("str_to_transform", help="Enter a string to be transformed: ", type=str)
@@ -85,10 +84,13 @@ def main(*args):
             print("You have entered an invalid argument.")
             return False
     else:
-        print_outs(args)
+        for item in args:
+            print_outs(item)
 
     return True
 
 
-if __name__ == '__main__':
-    main()
+# =============================================================================
+# if __name__ == '__main__':
+#     main()
+# =============================================================================

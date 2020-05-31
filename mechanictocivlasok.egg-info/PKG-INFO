@@ -1,6 +1,6 @@
 Metadata-Version: 1.2
-Name: mechanitocivlasok
-Version: 0.0.1
+Name: mechanictocivlasok
+Version: 0.0.2
 Summary: git directory: mechanic-aminations-BA
 Home-page: https://github.com/Tocivlasok/mechanic-animation-BA.git
 Author: Simona Korkobcova
@@ -9,6 +9,6 @@ License: UNKNOWN
 Description: This repository was created for training purposes of Mechanic Animations Python Boot Camp.
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
-Classifier: License :: OSI Approved :: Apache License :: Version 2.0
+Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.6

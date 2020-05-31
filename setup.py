@@ -12,8 +12,8 @@ with open("README.md", "r") as fh:
 
 
 setuptools.setup(
-    name="mechanitocivlasok",
-    version="0.0.1",
+    name="mechanictocivlasok",
+    version="0.0.2",
     packages=setuptools.find_packages(),
     
     # metadata
@@ -24,7 +24,7 @@ setuptools.setup(
     url="https://github.com/Tocivlasok/mechanic-animation-BA.git",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: Apache License :: Version 2.0",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
