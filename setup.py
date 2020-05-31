@@ -7,12 +7,12 @@ Created on Sun May 31 17:55:42 2020.
 import setuptools
 
 
-with open("C:\\Users\\user\\Desktop\\Sima\\mechanic_animation\\README.md", "r") as fh:
+with open("README.md", "r") as fh:
     long_description = fh.read()
 
 
 setuptools.setup(
-    name="mechani-automation-python-boot-camp-TOCIVLASOK",
+    name="mechanitocivlasok",
     version="0.0.1",
     packages=setuptools.find_packages(),
     
