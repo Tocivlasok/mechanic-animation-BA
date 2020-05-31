@@ -1,0 +1,12 @@
+README.md
+setup.py
+mechanictocivlasok.egg-info/PKG-INFO
+mechanictocivlasok.egg-info/SOURCES.txt
+mechanictocivlasok.egg-info/dependency_links.txt
+mechanictocivlasok.egg-info/top_level.txt
+string_funcs/__init__.py
+string_funcs/play_with_string.py
+tests/__init__.py
+tests/test_play_with_string_main.py
+tests/test_play_with_string_reverse.py
+tests/test_play_with_string_upper_case.py
