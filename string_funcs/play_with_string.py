@@ -7,6 +7,8 @@ If several versions of Python installed,
 You can hardcode #!/usr/bin/python; that's ok, but less flexible.
 
 @author: Tocivlasok
+
+@directory: mechanic_animations/string_funcs/
 """
 
 
@@ -17,14 +19,6 @@ def __init__(self):
     # Return exits the current function or method.
     # Pass is a null operation and allows execution to continue at the next statement.
     pass
-
-
-def sima_print():
-    """To be called from a dirrefent .py-file.
-
-    Testing pacgage availability.
-    """
-    print("Managed to pass.")
 
 
 def reverse_str(str_passed):
@@ -76,8 +70,7 @@ def print_outs(string_to_be_processed):
 
 
 def main(*args):
-    """
-    Prompts the user to enter his/her string.
+    """Prompts the user to enter his/her string.
 
     Converts it in 3 different ways.
     """

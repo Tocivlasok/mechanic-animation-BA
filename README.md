@@ -1,0 +1,1 @@
+This repository was created for training purposes of Mechanic Animations Python Boot Camp.
