@@ -1,12 +1,30 @@
 Metadata-Version: 1.2
 Name: mechanictocivlasok
-Version: 0.0.2
+Version: 0.0.3
 Summary: git directory: mechanic-aminations-BA
 Home-page: https://github.com/Tocivlasok/mechanic-animation-BA.git
 Author: Simona Korkobcova
 Author-email: simona.korkobcova@gmail.com
 License: UNKNOWN
 Description: This repository was created for training purposes of Mechanic Animations Python Boot Camp.
+        
+        Install the packacke available at https://test.pypi.org/project/mechanictocivlasok/0.0.2/
+        
+        from string_funcs import play_with_string
+        
+        If play_with_string.main() has exactly 1 input arg 
+        which is a valid path to the file,
+        it will open it, read its content, and transform line by line
+        (reverse and uppercase).
+        
+        If play_with_string.main() has exactly 1 input arg, which is not valid path,
+        it will transform it in 3 different ways
+        (reverse, uppercase, combined transformation).
+        
+        If play_with_string.main() has more than 1 input arg,
+        it will transform those in 3 different ways each
+        (reverse, uppercase, combined transformation).
+        
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License

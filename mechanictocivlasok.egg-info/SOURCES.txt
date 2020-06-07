@@ -9,4 +9,5 @@ string_funcs/play_with_string.py
 tests/__init__.py
 tests/test_play_with_string_main.py
 tests/test_play_with_string_reverse.py
+tests/test_play_with_string_transform_string.py
 tests/test_play_with_string_upper_case.py
