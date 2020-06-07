@@ -8,7 +8,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../")
 from string_funcs import play_with_string
-
+import pytest
 
 # from play_with_string import reverse_str
 
@@ -24,13 +24,12 @@ from string_funcs import play_with_string
 # and the message will be simply shown in the traceback. # assert expr, "mssg"
 
 
-def __init__(self):
-    pass
-
-
 def test_reverse_str_single_word():
-    """Test for reverse_str(single word)."""
-    assert play_with_string.reverse_str("lollypop") == "popyllol"  # , "Failure at -single word- inarg."
+    """Test for reverse_str(single word).
+
+     #, "Failure at -single word- inarg."
+    """
+    assert play_with_string.reverse_str("lollypop") == "popyllol"
 
 
 def test_reverse_str_multiple_words():
@@ -40,22 +39,36 @@ def test_reverse_str_multiple_words():
 
 def test_reverse_str_number_int():
     """Test for reverse_str(number integer)."""
-    assert play_with_string.reverse_str(7230) is False
+    # assert not play_with_string.reverse_str(7230)
+    with pytest.raises(ValueError) as errinfo:
+        play_with_string.reverse_str(7230)
+    assert "Value is not string." in str(errinfo.value)
 
 
 def test_reverse_str_number_float():
     """Test for reverse_str(number float)."""
-    assert play_with_string.reverse_str(8.28427) is False
+    # assert not play_with_string.reverse_str(8.28427)
+    with pytest.raises(ValueError) as errinfo:
+        play_with_string.reverse_str(8.28427)
+    assert "Value is not string." in str(errinfo.value)
 
 
 def test_reverse_str_none():
     """Test for reverse_str(None)."""
-    assert play_with_string.reverse_str(None) is False
+    # assert not play_with_string.reverse_str(None)
+    with pytest.raises(ValueError) as errinfo:
+        play_with_string.reverse_str(None)
+    assert "Value is blank." in str(errinfo.value)
 
 
 def test_reverse_str_blank():
-    """Test for reverse_str("")."""
-    assert play_with_string.reverse_str("") is False  # , "Passed: empty string. Minimum 1 argument required."
+    """Test for reverse_str("").
+
+     #, Passed: empty string. Minimum 1 argument required."
+    """
+    with pytest.raises(ValueError) as errinfo:
+        play_with_string.reverse_str("")
+    assert "Value is blank." in str(errinfo.value)
 
 
 def test_reverse_str_special_chars():
@@ -65,18 +78,20 @@ def test_reverse_str_special_chars():
 
 def test_reverse_str_char10():
     """Test for reverse_str(new_line())."""
-    assert play_with_string.reverse_str("\n") is not False
+    assert play_with_string.reverse_str("\n")
 
 
 def test_reverse_str_list_of_values():
     """Test for reverse_str(list)."""
-    assert play_with_string.reverse_str(["mio", 125, {"!", "↔"}]) is False
+    # assert not play_with_string.reverse_str(["mio", 125, {"!", "↔"}])
+    with pytest.raises(ValueError) as errinfo:
+        play_with_string.reverse_str(["mio", 125, {"!", "↔"}])
+    assert "Value is not string." in str(errinfo.value)
 
 
 def test_reverse_str_list_of_int_values():
     """Test for reverse_str(list)."""
-    assert play_with_string.reverse_str([1, 7, 4]) is False
-
-
-if __name__ == "__main__":
-    print("Passed.")
+    # assert not play_with_string.reverse_str([1, 7, 4])
+    with pytest.raises(ValueError) as errinfo:
+        play_with_string.reverse_str([1, 7, 4])
+    assert "Value is not string." in str(errinfo.value)

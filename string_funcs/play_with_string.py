@@ -13,27 +13,18 @@ You can hardcode #!/usr/bin/python; that's ok, but less flexible.
 
 
 import argparse
-
-
-def __init__(self):
-    # Return exits the current function or method.
-    # Pass is a null operation and allows execution to continue at the next statement.
-    pass
-
+import sys
 
 def reverse_str(str_passed):
     """Return reversed string."""
     # check whether user input is not blank
-    # print("from reverse_str()")
     if not bool(str_passed):
-        print("You have entered an empty string.")
-        return False
+        # print("reverse: You have entered an empty string.")
+        raise ValueError("Value is blank.")
     # check whether user input is of type str
-    # not needed as argparse in main() takes all the inputs as strings
     elif not isinstance(str_passed, str):
-        print("You should have entered a string.")
-        return False
-    # return reverserd string
+        # print("reverse: You should have entered a string.")
+        raise ValueError("Value is not string.")
     else:
         str_to_transform = (''.join(reversed(str_passed)))
         return str_to_transform
@@ -42,31 +33,21 @@ def reverse_str(str_passed):
 def upper_case_str(str_passed):
     """Return upperCased string."""
     # check whether user input is not blank
-    # print("from upper_case_str()")
     if not bool(str_passed):
-        print("You have entered an empty string.")
-        return False
+        raise ValueError("Value is blank.")
     # check whether user input is of type str
-    # not needed as argparse in main() takes all the inputs as strings
     elif not isinstance(str_passed, str):
-        print("You should have entered a string.")
-        return False
-    # return upperCased string
+        raise ValueError("Value is not string.")
     else:
         str_to_transform = str_passed.upper()
         return str_to_transform
 
 
-def print_outs(string_to_be_processed):
-    """Print transformations results."""
-    # print("from print_outs()")
-    print("Your string Reversed: ", end='')
-    print(str(reverse_str(string_to_be_processed)))
-    print("Your string UpperCased: ", end='')
-    print(str(upper_case_str(string_to_be_processed)))
-    print("Your string Transformed in peculiar way: ", end='')
-    print(str(upper_case_str(str(reverse_str(string_to_be_processed)))))
-    return
+def transform_string(str_passed):
+    """Return string transformed in 3 different ways as a touple."""
+    return reverse_str(str_passed), \
+        upper_case_str(str_passed), \
+        upper_case_str(reverse_str(str_passed))
 
 
 def main(*args):
@@ -74,23 +55,32 @@ def main(*args):
 
     Converts it in 3 different ways.
     """
+    prints = ["Reversed: ", "UpperC: ", "Combined: "]
     parser = argparse.ArgumentParser()
     if(len(args) == 0):
         parser.add_argument("str_to_transform", help="Enter a string to be transformed: ", type=str)
         args = parser.parse_args()
-        if(args.str_to_transform):
-            print_outs(args.str_to_transform)
-        else:
-            print("You have entered an invalid argument.")
-            return False
+        try:
+            for function in range(len(prints)):
+                print(prints[function] + "\t" + str(transform_string(args.str_to_transform)[function]))
+            print("\n")
+            return True
+        except ValueError:
+            raise Exception("You have entered an invalid argument.")
+
     else:
         for item in args:
-            print_outs(item)
+            try:
+                results = transform_string(item)
+                for function in range(len(prints)):
+                    print("main:" + prints[function] + "\t" + str(results[function]))
+                print("\n")
+            except ValueError:
+                raise Exception("You have entered an invalid argument.")
+                return False
 
-    return True
+        return True
 
 
-# =============================================================================
-# if __name__ == '__main__':
-#     main()
-# =============================================================================
+if __name__ == '__main__':
+    main()
