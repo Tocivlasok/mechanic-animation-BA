@@ -67,7 +67,6 @@ def main(*args):
             return True
         except ValueError:
             raise Exception("You have entered an invalid argument.")
-
     else:
         for item in args:
             try:

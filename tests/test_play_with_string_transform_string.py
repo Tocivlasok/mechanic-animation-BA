@@ -83,3 +83,4 @@ def test_transform_string_list_of_int_values():
     with pytest.raises(ValueError) as errinfo:
         play_with_string.transform_string([1, 7, 4])
     assert "Value is not string." in str(errinfo.value)
+    

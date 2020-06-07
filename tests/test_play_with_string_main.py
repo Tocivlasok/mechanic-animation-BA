@@ -19,6 +19,7 @@ from string_funcs import play_with_string
 # pass list of values to the main
 # result = main(["-r", "-u", "hello world"])
 
+
 # 1
 def test_main_single_word():
     """Test for main(single word)."""
