@@ -54,10 +54,10 @@ def test_main_number_float():
 def test_main_none():
     """Test for main(None)."""
     # assert str(ex.value) is "You have entered an invalid argument."
-    # assert play_with_string.main(None)
-    with pytest.raises(Exception) as ex:
-        play_with_string.main(None)
-    assert "You have entered an invalid argument." in str(ex.value)
+    assert play_with_string.main(None) is None
+    # with pytest.raises(Exception) as ex:
+    #   play_with_string.main(None)
+    # assert "You have entered an invalid argument." in str(ex.value)
 
 
 # 6
@@ -65,10 +65,10 @@ def test_main_blank():
     """Test for main("").
 
     Passed: empty string. Minimum 1 argument required."""
-    # assert play_with_string.main("") is None
-    with pytest.raises(Exception) as ex:
-        play_with_string.main("")
-    assert "You have entered an invalid argument." in str(ex.value)
+    assert play_with_string.main("") is None
+    # with pytest.raises(Exception) as ex:
+    #     play_with_string.main("")
+    # assert "You have entered an invalid argument." in str(ex.value)
 
 
 # 7
@@ -105,3 +105,5 @@ def test_main_list_of_int_values():
     with pytest.raises(Exception) as ex:
         play_with_string.main([1, 7, 4])
     assert "You have entered an invalid argument." in str(ex.value)
+
+

@@ -13,7 +13,7 @@ You can hardcode #!/usr/bin/python; that's ok, but less flexible.
 
 
 import argparse
-import sys
+
 
 def reverse_str(str_passed):
     """Return reversed string."""
@@ -60,13 +60,40 @@ def main(*args):
     if(len(args) == 0):
         parser.add_argument("str_to_transform", help="Enter a string to be transformed: ", type=str)
         args = parser.parse_args()
+        file_name = args.str_to_transform
         try:
-            for function in range(len(prints)):
-                print(prints[function] + "\t" + str(transform_string(args.str_to_transform)[function]))
-            print("\n")
-            return True
-        except ValueError:
-            raise Exception("You have entered an invalid argument.")
+            with open(file_name, "r") as f:
+                for line in f:
+                    print(reverse_str(line))
+                    print(upper_case_str(line))
+        except:
+            try:
+                for function in range(len(prints)):
+                    print(prints[function] + "\t" + str(transform_string(args.str_to_transform)[function]))
+                print("\n")
+                return True
+            except ValueError:
+                raise Exception("You have entered an invalid argument.")
+
+    elif (len(args) == 1):
+        # file_name = os.path.dirname(__file__) + "\\pig_wolf.txt"
+        # print(file_name)
+        file_name = args[0]
+        if file_name:
+            print(file_name)
+            try:
+                with open(file_name, "r") as f:
+                    for line in f:
+                        print(reverse_str(line))
+                        print(upper_case_str(line))
+            except:
+                try:
+                    for function in range(len(prints)):
+                        print(prints[function] + "\t" + str(transform_string(args[0])[function]))
+                    print("\n")
+                    return True
+                except ValueError:
+                    raise Exception("You have entered an invalid argument.")
     else:
         for item in args:
             try:
