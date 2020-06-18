@@ -77,7 +77,7 @@ def main(*args):
                 raise Exception("You have entered an invalid argument.")
 
     elif (len(args) == 1):
-        file_name = os.path.dirname(__file__) + "\\pig_wolf.txt"
+        # file_name = os.path.dirname(__file__) + "\\pig_wolf.txt"
         # print(file_name)
         file_name = args[0]
         if file_name:
