@@ -13,6 +13,7 @@ You can hardcode #!/usr/bin/python; that's ok, but less flexible.
 
 
 import argparse
+import os
 
 
 def reverse_str(str_passed):
@@ -69,14 +70,14 @@ def main(*args):
         except:
             try:
                 for function in range(len(prints)):
-                    print(prints[function] + "\t" + str(transform_string(args.str_to_transform)[function]))
+                    print(prints[function] + "\t" + transform_string(args.str_to_transform)[function])
                 print("\n")
                 return True
             except ValueError:
                 raise Exception("You have entered an invalid argument.")
 
     elif (len(args) == 1):
-        # file_name = os.path.dirname(__file__) + "\\pig_wolf.txt"
+        file_name = os.path.dirname(__file__) + "\\pig_wolf.txt"
         # print(file_name)
         file_name = args[0]
         if file_name:
@@ -89,7 +90,7 @@ def main(*args):
             except:
                 try:
                     for function in range(len(prints)):
-                        print(prints[function] + "\t" + str(transform_string(args[0])[function]))
+                        print(prints[function] + "\t" + transform_string(args[0])[function])
                     print("\n")
                     return True
                 except ValueError:
@@ -99,7 +100,7 @@ def main(*args):
             try:
                 results = transform_string(item)
                 for function in range(len(prints)):
-                    print("main:" + prints[function] + "\t" + str(results[function]))
+                    print("main:" + prints[function] + "\t" + results[function])
                 print("\n")
             except ValueError:
                 raise Exception("You have entered an invalid argument.")
