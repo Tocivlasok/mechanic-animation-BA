@@ -8,6 +8,7 @@ import sys
 import argparse
 import pandas as pd
 import re
+import os
 
 
 def create_parser_N(user_input):
@@ -132,160 +133,308 @@ def create_parser_N(user_input):
     args = parser.parse_args(user_input)
     return parser, args
 
-
-def standardize_filepath(filepath):
-    """Change slashes to double-back-slashes.
-
-    Concatenate and return as regex.
-    """
-    speciality = "▀■░▒▓■▄"
-    path_standardized = (((filepath.replace('\\\\', speciality)).replace('\\', '\\\\')).replace("/", '\\\\')).replace(speciality, '\\\\')
-    # path_standardized = (filepath.replace('\\', '\\\\')).replace("/", '\\\\')
-    return 'r"' + path_standardized + '"'
+# not used
+# =============================================================================
+# def standardize_filepath(filepath):
+#     """Change slashes to double-back-slashes.
+#
+#     Concatenate and return as regex.
+#     """
+#     speciality = "▀■░▒▓■▄"
+#     path_standardized = (((filepath.replace('\\\\', speciality)).replace('\\', '\\\\')).replace("/", '\\\\')).replace(speciality, '\\\\')
+#     # path_standardized = (filepath.replace('\\', '\\\\')).replace("/", '\\\\')
+#     return 'r"' + path_standardized + '"'
+# =============================================================================
 
 
 def file_read_content(filepath):
     """Read content of *.txt file.
+
     Return whole text string object.
     Return pandas DataFrame object for looping through lines/words.
     """
+    # TODO raise error/exception if file not found
+    # TODO limit file size
+    # TODO raise error/exception when empty file passed
     with open(filepath, 'r') as filehandle:
         whole_text = filehandle.read()
-    df = pd.DataFrame()
-    df = pd.read_csv(filepath,
-                     sep='\n',
-                     header=None)
-    return whole_text, df
+        # lines = whole_text.splitlines()
+        # words = lines.split(' ')
+    # lines = tuple(open(filepath, 'r'))
+    # df = pd.DataFrame()
+    # df = pd.read_csv(filepath, sep='\n', header=None)
+    # return whole_text, df
+    return whole_text
+
+# =============================================================================
+#     try:
+#         with open(filepath, 'r') as filehandle:
+#             whole_text = filehandle.read()
+#             # lines = whole_text.splitlines()
+#             # words = lines.split(' ')
+#         # lines = tuple(open(filepath, 'r'))
+#         # df = pd.DataFrame()
+#         # df = pd.read_csv(filepath, sep='\n', header=None)
+#         # return whole_text, df
+#         return whole_text
+#     except (FileNotFoundError, IOError):
+#         print("Wrong file or file path")
+#         # if not os.path.isfile("nothing.txt"):
+#             # raise FileNotFoundError
+#     pass
+# =============================================================================
 
 
-def compose_filepath_for_result(filepath, suffix):
+def compose_filepath_for_result(filepath, argument):
+    """Create filepath with corresponding suffix.
+
+    Results to be written into.
+    Realtes only to '-f*' argument options - process data from a text file.
+    """
     truncated_end = re.sub('.txt', '', filepath)
-    func_suff = {'frs': '_strings_reversed.txt',
+    func_argm = {'frs': '_strings_reversed.txt',
                  'fus': '_strings_uppercased.txt',
                  'fcs': '_strings_combined.txt',
-                 
+
                  'frl': '_lines_reversed.txt',
                  'fcl': '_lines_combined.txt',
-                 
+
                  'frw': '_whole_reversed.txt',
-                 'fuw': '_whole_combined.txt'}
-    return  standardize_filepath(truncated_end + func_suff.get(suffix))
-    
+                 'fuw': '_whole_combined.txt'
+                 }
+    # return standardize_filepath(truncated_end + func_argm.get(argument))
+    return truncated_end + func_argm.get(argument)
+
 
 def file_write_content(filepath_with_suffix, data):
-    """Write data to *.txt file generated from compose_filepath_for_result()"""
-    # TODO: update this function to process strings and also tuples
+    """Write string data to *.txt file generated from compose_filepath_for_result()."""
     with open(filepath_with_suffix, 'w') as filehandle:
-         filehandle.write(data)
+        if isinstance(data, str):
+            filehandle.write(data)
+        elif isinstance(data, tuple):
+            filehandle.write(' '.join(str(x) for x in data))
+        elif isinstance(data, list):
+            filehandle.write('\n'.join(data))
     pass
+    # new line chr(10) "\n" "\r\n" is messy
+
+
+# =============================================================================
+# def file_write_content_tuple(filepath_with_suffix, data):
+#     """Write tuple data to *.txt file generated from compose_filepath_for_result()"""
+#     with open(filepath_with_suffix, 'w') as filehandle:
+#         filehandle.write(' '.join(str(x) for x in data))
+#     pass
+# =============================================================================
 
 
 def run_functiton_on_data(func, data):
     """Pass function as paramater. Apply function to data."""
-    func_dict = {'reverse_str': reverse_str,
-                 'upper_case_str': upper_case_str,
-                 'transform_string': transform_string}
+    func_dict = {'r': reverse_str,
+                 'u': upper_case_str,
+                 'c': transform_string
+                 }
     return func_dict.get(func)(data)
+
+
+def run_func_on_data_with_mssg(argument, data):
+    """Process data [str/tuple] only when the object is not empty.
+
+    Printing basic fuctions output to the console.
+    """
+    argument_mssg = {'r':   "\nRversed",
+                     'u':   "\nUppergased",
+                     'c':   "\nReversed & Uppercased"
+                     }
+    func_dict = {'r':   reverse_str,
+                 'u':   upper_case_str,
+                 'c':   transform_string
+                 }
+    # TODO could be 1 ditionary
+    # print(argument_mssg.get(argument)[1])
+    if not data:
+        pass
+    else:
+        print(argument_mssg.get(argument))
+        for item in data:
+            print(func_dict.get(argument)(item))
+            # print(run_functiton_on_data(argument, item))
+    pass
+
+
+def run_func_on_data_with_mssg_file_args(argument, data):
+    """Process data = filenames [str/tuple] only when the object is not empty."""
+    argument_mssg = {'frs': '\nFile - reversed - string by string.',
+                     'fus': '\nFile - uppercase - string by string.',
+                     'fcs': '\nFile - reverse and uppercase - string by string.',
+
+                     'frl': '\nFile - reverse line by line.',
+                     'fcl': '\nFile - reverse and uppercase line by line.',
+
+                     'frw': '\nFile - reverse - whole.',
+                     'fuw': '\nFile - reverse and uppercase - whole.'
+                     }
+    if not data:
+        pass
+    else:
+        for file in data:
+            destpath = file_processing(argument, file)
+            print(argument_mssg.get(argument) + '\nSee results in: ' + destpath)
+    pass
 
 
 def reverse_str(str_passed):
     """Return reversed string."""
-    # check whether user input is not blank
-    if not bool(str_passed):
-        # print("reverse: You have entered an empty string.")
-        raise ValueError("Value is blank.")
-    # check whether user input is of type str
-    elif not isinstance(str_passed, str):
-        # print("reverse: You should have entered a string.")
-        raise ValueError("Value is not string.")
+    if isinstance(str_passed, str):
+        return (''.join(reversed(str_passed)))
+    elif isinstance(str_passed, tuple) or isinstance(str_passed, list):
+        results = []
+        for item in str_passed:
+            # TODO try to convert to string if item not string
+            results.append((''.join(reversed(item))))
+        return results
     else:
-        str_to_transform = (''.join(reversed(str_passed)))
-        return str_to_transform
+        # TODO try to convert to string
+        pass
+# =============================================================================
+#     # check whether user input is not blank
+#     if not bool(str_passed):
+#         # print("reverse: You have entered an empty string.")
+#         raise ValueError("Value is blank.")
+#     # check whether user input is of type str
+#     elif not isinstance(str_passed, str):
+#         # print("reverse: You should have entered a string.")
+#         raise ValueError("Value is not string.")
+#     else:
+#         str_to_transform = (''.join(reversed(str_passed)))
+#         return str_to_transform
+# =============================================================================
 
 
 def upper_case_str(str_passed):
     """Return upperCased string."""
-    # check whether user input is not blank
-    if not bool(str_passed):
-        raise ValueError("Value is blank.")
-    # check whether user input is of type str
-    elif not isinstance(str_passed, str):
-        raise ValueError("Value is not string.")
+    if isinstance(str_passed, str):
+        return str_passed.upper()
+    elif isinstance(str_passed, tuple) or isinstance(str_passed, list):
+        results = []
+        for item in str_passed:
+            # TODO try to convert to string if item not string
+            results.append(item.upper())
+        return results
     else:
-        str_to_transform = str_passed.upper()
-        return str_to_transform
+        # TODO try to convert to string
+        pass
+# =============================================================================
+#     # check whether user input is not blank
+#     if not bool(str_passed):
+#         raise ValueError("Value is blank.")
+#     # check whether user input is of type str
+#     elif not isinstance(str_passed, str):
+#         raise ValueError("Value is not string.")
+#     else:
+#         str_to_transform = str_passed.upper()
+#         return str_to_transform
+# =============================================================================
 
 
 def transform_string(str_passed):
-    """Return string reversed and simultaneously upppercased."""
+    """Return string reversed and subsequently upppercased."""
     return upper_case_str(reverse_str(str_passed))
+
+
+def file_processing(argument, file):
+    """."""
+    # function to perform - r/u/c
+    func = argument[1]
+    # granularity - s/l/w
+    gran = argument[2]
+
+    destpath = compose_filepath_for_result(file, argument)
+    data = file_read_content(file)
+
+    # txtfile output stripping based on granularity
+    gran_switcher = {
+        'w': data,
+        'l': data.splitlines(),
+        's': data.splitlines()
+        # (data.splitlines()).split(' ')
+        # lines = data.splitlines()
+        # words = lines.split(' ')
+        # data = words
+        }
+
+    results = []
+    data_granular = gran_switcher.get(gran, -1)
+    if gran == 'w':
+        pass  # process whole data as 1 string
+        results = run_functiton_on_data(func, data_granular)
+    elif gran == 'l':
+        for item in data_granular:
+            reversed_line = run_functiton_on_data(func, item)
+            # print(reversed_line)
+            results.append(reversed_line)
+            # results = results + (reversed_line,)
+    elif gran == 's':
+        for line in data_granular:
+            # print('\nline: ' + line)
+            words = re.split(' ', line)
+            # print('type(words): ' + str(type(words)))
+            # print('words: ', end=" ")
+            # print(words)
+            processed_strings_in_line = run_functiton_on_data(func, words)
+            # print('reversed_strings_in_line: ', end=" ")
+            # print(reversed_strings_in_line)
+            processed_strings_in_line_as_1_string = ' '.join(processed_strings_in_line)
+            # print(reversed_strings_in_line_as_1_string)
+            results.append(processed_strings_in_line_as_1_string)
+    else:
+        # there simply can't be such a case
+        pass
+
+    file_write_content(
+        destpath,
+        results
+    )
+
+    return destpath
 
 
 def main(*args):
     """Process input arguments passed by the user from command line."""
     parser, args = create_parser_N(sys.argv[1:])
 
-    # -r    REVERSE
-    args.r
-    print(run_functiton_on_data('reverse_str', args.r[0]))
+    # -r    args.r   REVERSE
+    run_func_on_data_with_mssg('r', args.r)
 
     # -u    UPPERCASE
-    args.u
+    run_func_on_data_with_mssg('u', args.u)
 
     # -c    COMBINED (REVERSE AND UPPERCASE)
-    args.c
+    run_func_on_data_with_mssg('c', args.c)
 
     # -frs  FILE REVERSE STRINGS
-    args.frs
-    file_write_content(args.frs[0], ("vfr"))
-    # update file_write_content() to accept touples and also strings
+    run_func_on_data_with_mssg_file_args('frs', args.frs)
 
     # -fus  FILE UPPERCASE STRINGS
-    args.fus
+    run_func_on_data_with_mssg_file_args('fus', args.fus)
 
     # -fcs  FILE COMBINE STRINGS (REVERSE AND UPPERCASE)
-    args.fcs
+    run_func_on_data_with_mssg_file_args('fcs', args.fcs)
 
     # -frl  FILE REVERSE LINES
-    args.frl
+    run_func_on_data_with_mssg_file_args('frl', args.frl)
 
     # -fcl  FILE COMBINE LINES (REVERSE AND UPPERCASE)
-    args.fcl
+    run_func_on_data_with_mssg_file_args('fcl', args.fcl)
 
     # -frw  FILE REVERSE WHOLE
-    args.frw
-    print(compose_filepath_for_result(r"C:\Users\user\Desktop\Folder\nta.txt", 'frw'))
+    run_func_on_data_with_mssg_file_args('frw', args.frw)
 
     # -fcw  FILE COMBINE WHOLE (REVERSE AND UPPERCASE)
-    args.fcw
-
-
-# =============================================================================
-#     # -r
-#     if(args.r):
-#         print('Reversed:')
-#         for data_item in args.r:
-#             print(reverse_str(data_item))
-#         print()
-#     else:
-#         pass
-#     # -u
-#     if(args.u):
-#         print('Upper-cased:')
-#         for data_item in args.u:
-#             print(upper_case_str(data_item))
-#         print()
-#     else:
-#         pass
-#
-#     frs_files = args.frs
-#     for item in frs_files:
-#         whole_text, df = file_read_content(item)
-#         print(whole_text)
-#         print()
-# =============================================================================
+    run_func_on_data_with_mssg_file_args('fcw', args.fcw)
 
     return True
+
 
 if __name__ == '__main__':
     main()
